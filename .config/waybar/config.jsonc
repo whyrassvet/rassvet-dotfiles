@@ -1,0 +1,132 @@
+// -*- mode: jsonc -*-
+{
+	"fixed-center": true,
+	"margin-bottom": -10,
+	"margin-top": 10,
+	"margin-right": 20,
+	"margin-left": 20,
+	"exclusive": true,
+
+	"modules-left": ["hyprland/workspaces", "hyprland/window"],
+	"modules-center": ["temperature", "memory", "cpu"],
+	"modules-right": ["tray", "hyprland/language", "pulseaudio", "clock", "power-profiles-daemon", "custom/notification", "custom/power"],
+
+
+
+	"hyprland/workspaces": {
+		"format": "<span size='160%'>{icon}</span>",
+		"on-click": "activate",
+		"format-icons": {
+			"active": "",
+			"default": ""
+			},
+		"tooltip": false,
+	},
+
+	"hyprland/window": {
+		"format": "{class}",
+		"separate-outputs": false,
+	},
+
+    
+  "temperature": {
+    "interval": 1,
+    "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+    "format": "<span color='#89b4fa'> </span> {temperatureC}°C"
+  },
+  "cpu": {
+    "format": "<span color='#a6e3a1'> </span> {usage}%",
+    "tooltip": true,
+    "interval": 1,
+  },
+	"memory": {
+  	"format": "<span color='#fab387'> </span> {used:0.1f}GiB",
+  },
+
+	"tray": {
+		"icon-size": 18,
+		"spacing": 10
+	},
+
+	"hyprland/language": {
+		"format": "<span color='#fab387'>󰌏</span> {}",
+		"format-en": "EN",
+		"format-ru": "RU",
+		"format-ua": "UA",
+		"format-uk": "UA"
+	},
+    
+	"pulseaudio": {
+		"scroll-step": 5,
+		"format": "<span color='#fab387'>{icon}</span>  {volume}%",
+		"format-icons": {
+		"default": ["", "", ""]
+		},
+		"on-click": "pavucontrol",
+		"tooltip": false
+	},
+
+	"clock": {
+		"format": "<span color='#fab387'></span>  {:%H:%M}",
+		"tooltip-format": "<big><span color='#cdd6f4'>{:%Y %B}</span></big>\n<tt><small>{calendar}</small></tt>",
+		"format-alt": "<span color='#eba0ac'></span> <span color='#cdd6f4'>{:%Y-%m-%d}</span>",
+
+        "calendar": {
+                    "mode"          : "month",
+                    "mode-mon-col"  : 3,
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 1,
+                    "format": {
+                              "months":     "<span color='#cdd6f4'><b>{}</b></span>",
+                              "days":       "<span color='#cdd6f4'><b>{}</b></span>",
+                              "weeks":      "<span color='#f5c2e7'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#f5c2e7'><b>{}</b></span>",
+                              "today":      "<span color='#eba0ac'><b><u>{}</u></b></span>"
+                              }
+                    },
+        "actions":  {
+                    "on-click-right": "mode",
+                    "on-click-forward": "tz_up",
+                    "on-click-backward": "tz_down",
+                    "on-scroll-up": "shift_up",
+                    "on-scroll-down": "shift_down"
+                    }
+		},
+	
+	  "custom/notification": {
+      "escape": true,
+      "exec": "swaync-client -swb",
+      "exec-if": "which swaync-client",
+      "format": "{icon}",
+      "format-icons": {
+        "none": "󰂚",
+        "notification": "󱅫",
+      },
+      "on-click": "sleep 0.1 && swaync-client -t -sw",
+      "return-type": "json",
+      "tooltip": false,
+    },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+    	"default": "",
+      "performance": "",
+      "balanced": "󰾅",
+      "power-saver": ""
+    },
+  },
+  "custom/power": {
+    "format" : "⏻",
+		"tooltip": false,
+		"menu": "on-click",
+		"menu-file": "$HOME/.config/waybar/power_menu.xml",
+		"menu-actions": {
+			"shutdown": "systemctl poweroff",
+			"reboot": "systemctl reboot",
+		},
+  },
+	
+}
+
